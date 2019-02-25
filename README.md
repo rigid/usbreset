@@ -47,4 +47,8 @@ The following sequence is adequate to execute the program:
 
     ```echo $(lsusb | grep "Wireless Adapter");  wifipath=$( lsusb | grep "Wireless Adapter" | perl -nE "/\D+(\d+)\D+(\d+).+/; print qq(\$1/\$2)")  sudo usbreset /dev/bus/usb/$wifipath```
 
+   or
+   
+   ```sudo usbreset "$(lsusb | grep "Wireless Adapter" | awk '{ print "/dev/bus/usb/"$2"/"$4 }' | tr -d ':')"```
+
     which was inspired by the code provided by *knb* at http://askubuntu.com/questions/645/how-do-you-reset-a-usb-device-from-the-command-line
